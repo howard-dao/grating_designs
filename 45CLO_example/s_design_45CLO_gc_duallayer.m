@@ -6,10 +6,12 @@ clear; close all;
 % dependencies
 addpath(genpath([   'C:\Users\howar\OneDrive\Desktop\Documents' ...
                     '\Boston University\Silicon Photonics\Grating Couplers\grating_synthesis']));
+addpath(genpath(    'C:\Users\hdao\git\grating_synthesis'));
 addpath(genpath(    '\projectnb\siphot\howard\git\grating_synthesis'));
 
 addpath(genpath([   'C:\Users\howar\OneDrive\Desktop\Documents\' ...
                     'Boston University\Silicon Photonics\Grating Couplers\matlab_lumerical_api']))
+addpath(genpath(    'C:\Users\hdao\git\matlab_lumerical_api'));
 addpath(genpath(    '\projectnb\siphot\howard\git\matlab_lumerical_api'));
 
 %addpath(genpath([   'C:\Users\howar\OneDrive\Desktop\Documents' ...
