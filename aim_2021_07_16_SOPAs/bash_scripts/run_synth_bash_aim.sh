@@ -29,4 +29,5 @@
 module load matlab/2019a
 
 # run script
-matlab -nodisplay -r "addpath('/project/siphot/bz/code/utility'); addpath('/projectnb/siphot/bz/git/grating_synthesis/chips/210716_AIM_SOPAs'); f_run_designspace_2level_aim( $1, $2, $3, '$4', '$5' ); exit"
+# matlab -nodisplay -r "addpath('/project/siphot/bz/code/utility'); addpath('/projectnb/siphot/bz/git/grating_synthesis/chips/210716_AIM_SOPAs'); f_run_designspace_2level_aim( $1, $2, $3, '$4', '$5' ); exit"
+matlab -nodisplay -r "addpath('/projectnb/siphot/howard/git/grating_designs/aim_2021_07_16_SOPAs'); f_run_designspace_2level_aim( $1, $2, $3, '$4', '$5' ); exit"
