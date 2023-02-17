@@ -1,4 +1,4 @@
-function GC = f_makeGratingCell_AIM( dxy, lambda, ...
+function GC = f_makeGratingCell_AIM( dxy, lambda, y_domain_size, ...
                                          period, fill_top, fill_bot, offset_ratio, OPTS  )
 % makes and returns a c_twoLevelGratingCell object
 % for AIM process
@@ -15,6 +15,9 @@ function GC = f_makeGratingCell_AIM( dxy, lambda, ...
 %   lambda
 %       type: double, scalar
 %       desc: wavelength to solve at, in units 'units'
+%   y_domain_size
+%       type: double, scalar
+%       desc: vertical/transverse domain size
 %   period
 %       type: double, scalar
 %       desc: period of the grating cell, in units defined by synth_obj.units
@@ -48,9 +51,9 @@ function GC = f_makeGratingCell_AIM( dxy, lambda, ...
 % addpath('/projectnb/siphot/bz/git/grating_synthesis/main');
 % addpath('/projectnb/siphot/bz/git/grating_synthesis/auxiliary_functions');
 
-if nargin < 7
-    OPTS = struct();
-end
+% if nargin < 7
+%     OPTS = struct();
+% end
 
 % material indices
 background_index    = 1.45;
@@ -64,16 +67,20 @@ si_to_sin_space     = 100;
 sin_to_sin_space    = 100;
 
 % set domain 
-y_domain_size   = 4e3;
+% y_domain_size   = 4e3;
 domain_size     = [ y_domain_size, period ];
 
 % wrap offsets to range 0 to 1
 offset_ratio = mod( offset_ratio, 1 );
 
 % make 2 level grating cell
+% GC = c_twoLevelGratingCell( 'discretization', dxy, ...
+%                             'units', 'nm', ...
+%                             'lambda', lambda, ...
+%                             'domain_size', domain_size, ...
+%                             'background_index', background_index, ...
+%                             'numcells', 10 );
 GC = c_twoLevelGratingCell( 'discretization', dxy, ...
-                            'units', 'nm', ...
-                            'lambda', lambda, ...
                             'domain_size', domain_size, ...
                             'background_index', background_index, ...
                             'numcells', 10 );

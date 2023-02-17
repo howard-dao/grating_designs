@@ -162,12 +162,15 @@ end
 % draw cell
 % draw two levels using two level builder function
 % the inputs are organized [ top level, bottom level ]
-wg_thick        = [ t_polysi, t_body_top ];
 wg_min_y        = [ poly_miny, body_miny + t_body_bottom ];
+wg_thick        = [ t_polysi, t_body_top ];
 wgs_duty_cycles = [ fill_top, fill_bot ];
 wgs_offsets     = [ offset_ratio*period, 0 ];
-GC              = GC.twoLevelBuilder(   wg_min_y, wg_thick, [ n_pSi, n_cSi ], ...
-                                        wgs_duty_cycles, wgs_offsets );
+GC              = GC.twoLevelBuilder(   wg_min_y, ...
+                                        wg_thick, ...
+                                        [ n_pSi, n_cSi ], ...
+                                        wgs_duty_cycles, ...
+                                        wgs_offsets );
              
 end
 
