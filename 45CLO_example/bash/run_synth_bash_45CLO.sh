@@ -29,4 +29,4 @@ module load matlab/2019a
 
 # run script
 # matlab -nodisplay -r "addpath('/project/siphot/bz/code/utility'); addpath('/projectnb/siphot/bz/git/grating_designs/45CLO_2022_12_X'); f_run_designspace_duallevel_45CLO( $1, $2, '$3', '$4', $5 ); exit"
-matlab -nodisplay -r "addpath('/projectnb/siphot/hdao/git/grating_designs/45CLO_example'); f_run_designspace_duallevel_45CLO( $1, $2, '$3', '$4', $5 ); exit"
+matlab -nodisplay -r "addpath('/projectnb/siphot/howard/git/grating_designs/45CLO_example'); f_run_designspace_duallevel_45CLO( $1, $2, '$3', '$4', $5 ); exit"
