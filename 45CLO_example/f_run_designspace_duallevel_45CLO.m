@@ -20,8 +20,12 @@ function [] = f_run_designspace_duallevel_45CLO( lambda, optimal_angle, shallow_
 % laptop
 addpath( genpath( [ 'C:\Users\howar\OneDrive\Desktop\Documents' ...
                     '\Boston University\Silicon Photonics\Grating Couplers\grating_synthesis'] ) );
+<<<<<<< HEAD
 % SCC
 addpath( genpath( '\projectnb\siphot\howard\git\grating_synthesis' ) );
+=======
+addpath( genpath( '/projectnb/siphot/howard/git/grating_synthesis' ) );
+>>>>>>> 892114b4e700e332babb48a3db96aa9243823782
 
 % initial settings
 units               = 'nm';
