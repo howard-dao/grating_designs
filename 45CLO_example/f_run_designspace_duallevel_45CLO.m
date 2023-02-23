@@ -17,8 +17,10 @@ function [] = f_run_designspace_duallevel_45CLO( lambda, optimal_angle, shallow_
 
 % dependencies
 % all synth code
+% laptop
 addpath( genpath( [ 'C:\Users\howar\OneDrive\Desktop\Documents' ...
                     '\Boston University\Silicon Photonics\Grating Couplers\grating_synthesis'] ) );
+% SCC
 addpath( genpath( '\projectnb\siphot\howard\git\grating_synthesis' ) );
 
 % initial settings

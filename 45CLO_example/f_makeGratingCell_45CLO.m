@@ -63,6 +63,7 @@ function GC = f_makeGratingCell_45CLO( dxy, lambda, y_domain_size, ...
 %         lambda_um = lambda*1e-3;
 % end
 
+% define layer thicknesses and refractive indices
 [ t_box, t_bodysi, t_body_partial, t_polysi, t_nitride_liner, t_nitride_wg, ...
 n_SiO2, n_SiN, n_cSi, n_pSi ] = f_clo_layer_stack( lambda*1e-3 );
 
