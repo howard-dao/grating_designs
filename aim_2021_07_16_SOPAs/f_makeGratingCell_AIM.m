@@ -1,5 +1,5 @@
 function GC = f_makeGratingCell_AIM( dxy, lambda, y_domain_size, ...
-                                         period, fill_top, fill_bot, offset_ratio, OPTS  )
+                                     period, fill_top, fill_bot, offset_ratio, OPTS  )
 % makes and returns a c_twoLevelGratingCell object
 % for AIM process
 % will eventually support customizable profile options
@@ -40,17 +40,6 @@ function GC = f_makeGratingCell_AIM( dxy, lambda, y_domain_size, ...
 %       type: c_twoLevelGratingCell object
 %       desc: two level grating cell object
 
-% % dependencies
-% % desktop
-% addpath('C:\Users\bz\git\grating_synthesis\main');
-% addpath('C:\Users\bz\git\grating_synthesis\auxiliary_functions');
-% % laptop
-% addpath('C:\Users\beezy\git\grating_synthesis\main');
-% addpath('C:\Users\beezy\git\grating_synthesis\auxiliary_functions');
-% % SCC
-% addpath('/projectnb/siphot/bz/git/grating_synthesis/main');
-% addpath('/projectnb/siphot/bz/git/grating_synthesis/auxiliary_functions');
-
 % if nargin < 7
 %     OPTS = struct();
 % end
@@ -67,7 +56,6 @@ si_to_sin_space     = 100;
 sin_to_sin_space    = 100;
 
 % set domain 
-% y_domain_size   = 4e3;
 domain_size     = [ y_domain_size, period ];
 
 % wrap offsets to range 0 to 1
