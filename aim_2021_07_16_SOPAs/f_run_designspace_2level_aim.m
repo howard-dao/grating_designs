@@ -1,5 +1,7 @@
-function [] = f_run_designspace_2level_aim( lambda, optimal_angle, disc, coupling_direction, geometry )
-% authors: bohan
+function [] = f_run_designspace_2level_aim( lambda, optimal_angle, disc, ...
+                                            coupling_direction, ...
+                                            geometry, top_nitride_thick )
+% authors: bohan, howard
 % 
 % script for running the bi-level design space generation for aim layers
 %
@@ -7,41 +9,43 @@ function [] = f_run_designspace_2level_aim( lambda, optimal_angle, disc, couplin
 %
 % Inputs
 %   lambda
-%       wavelength (nm)
+%       type: double, scalar
+%       desc: wavelength [nm]
 %   optimal_angle
-%       desired output angle
+%       type: double, scalar
+%       desc: desired output angle [degrees]
 %   disc
-%       discretization (nm)
+%       type: double, scalar
+%       desc: discretization [nm]
 %   coupling_direction
-%       either 'up' or 'down'
+%       type: string
+%       desc: either 'up' or 'down'
 %   geometry
-%       i'll make this easy, give it a letter like a, b, c,
+%       type: string
+%       desc: layer stack settings: 'default' or 'custom'
+%   top_nitride_thick
+%       type: double, scalar
+%       desc: thickness of top/second nitride layer [nm]
 
 % dependencies
 % desktop
-%addpath('C:\Users\bz\git\grating_synthesis\main');
-%addpath('C:\Users\bz\git\grating_synthesis\auxiliary_functions');
 addpath( genpath('C:\Users\hdao\git\grating_synthesis') );
 % laptop
-%addpath('C:\Users\beezy\git\grating_synthesis\main');
-%addpath('C:\Users\beezy\git\grating_synthesis\auxiliary_functions');
 addpath( genpath(['C:\Users\howar\OneDrive\Desktop\Documents' ...
                     '\Boston University\Silicon Photonics' ...
                     '\Grating Couplers\grating_synthesis']))
 % SCC
-%addpath('/projectnb/siphot/bz/git/grating_synthesis/main');
-%addpath('/projectnb/siphot/bz/git/grating_synthesis/auxiliary_functions');
 addpath( genpath('/projectnb/siphot/howard/git/grating_synthesis') );
 
 % initial settings
-units               = 'nm';
-% index_clad          = 1.448;
-y_domain_size       = 4000;
-data_notes          = ['lambda ' num2str(lambda) ' optimal angle ' num2str(optimal_angle) ...
-                       'discretization ' num2str(disc) ' coupling direction ' coupling_direction];
+units           = 'nm';
+n_clad          = 1.45;
+y_domain_size   = 4000;
+data_notes      = [ 'lambda ', num2str(lambda), ...
+                    ' optimal angle ', num2str(optimal_angle), ...
+                    'discretization ', num2str(disc)
+                    ' coupling direction ', coupling_direction];
 
-n_clad = 1.45;
-                   
 % display inputs
 fprintf('Running design space synthesis on aim grating\n');
 fprintf('Inputs are:\n');
@@ -53,7 +57,7 @@ fprintf('Designed for coupling into: %s\n', 'oxide index 1.45');
 fprintf('Geometry: %s\n\n', geometry);
 
 switch geometry
-    case 'a'
+    case 'default'
         % default
         OPTS = struct();
 
@@ -67,29 +71,19 @@ switch geometry
                                                     fill_bot, ...
                                                     offset_ratio , ...
                                                     OPTS );
-    case 'b'
+    case 'custom'
         % default si, custom sin, fully etched
-        si_to_bot_sin       = 100;
-        bot_sin_thick       = 60;
-        sin_to_sin_thick    = 0;
-        top_sin_thick       = 160;
+        si_to_bot_sin_thick = 100;
+        bot_sin_thick       = 220;
+        sin_to_sin_thick    = 50;
+        top_sin_thick       = top_nitride_thick;
 
         OPTS = struct( 'geometry','default si custom sin gratings full etch', ...
-                       'si_to_bot_sin', si_to_bot_sin, ...
+                       'si_to_bot_sin', si_to_bot_sin_thick, ...
                        'bot_sin_thick', bot_sin_thick, ...
                        'sin_to_sin_thick', sin_to_sin_thick, ...
                        'top_sin_thick', top_sin_thick );
-                   
-%         h_makeGratingCell = @(dxy, units, lambda, background_index, y_domain_size, ...
-%                              period, fill_top, fill_bot, offset_ratio) ...
-%                              f_makeGratingCell_AIM( dxy, ...
-%                                                     lambda, ...
-%                                                     y_domain_size, ...
-%                                                     period, ...
-%                                                     fill_top, ...
-%                                                     fill_bot, ...
-%                                                     offset_ratio, ...
-%                                                     OPTS  );
+
         h_makeGratingCell = @(dxy, background_index, y_domain_size, ...
                              period, fill_top, fill_bot, offset_ratio) ...
                              f_makeGratingCell_AIM( dxy, ...
@@ -100,7 +94,8 @@ switch geometry
                                                     fill_bot, ...
                                                     offset_ratio, ...
                                                     OPTS  );
-        
+
+        fprintf('Top Nitride Thickness: %s\n\n', top_sin_thick);
 end
 
 % make synthesis object
@@ -131,10 +126,14 @@ fprintf('Design space generation sweep is done\n');
 fprintf('Saving data...\n');
 
 % make folder to save to
-save_data_path = [ pwd filesep synth_obj.start_time ...
-                   'aimgc_geometry_' geometry '_lambda' num2str(lambda) '_optangle' num2str(optimal_angle) ...
-                   '_dx_' num2str(synth_obj.discretization) '_' coupling_direction ...
-                   '_clad_' strrep(num2str(n_clad), '.', 'd') ];
+save_data_path = [  pwd filesep 
+                    'aimgc_geometry_' geometry ...
+                    '_top_nitride_thickness' num2str(top_sin_thick) ...
+                    '_lambda' num2str(lambda) ...
+                    '_optangle' num2str(optimal_angle) ...
+                    '_dx_' num2str(synth_obj.discretization) 
+                    '_' coupling_direction ...
+                    '_clad_' strrep(num2str(n_clad), '.', 'd') ];
 mkdir( save_data_path );
 
 % clear the GC from the data and save
