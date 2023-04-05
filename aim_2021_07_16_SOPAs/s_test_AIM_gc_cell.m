@@ -11,6 +11,7 @@ n_clad      = 1.45;
 theta       = 15; % deg
 period      = 2*pi/( k0 * ( neff_slab - n_clad*sin( theta*pi/180 ) ) );
 period      = round(period/dxy)  * dxy;
+y_domain_size = 4e3;
 
 fill_top = 0.9;
 fill_bot = 0.9;
@@ -38,7 +39,7 @@ switch which_grating
                        'sin_to_sin_thick', sin_to_sin_thick, ...
                        'top_sin_thick', top_sin_thick );
                    
-        GC = f_makeGratingCell_AIM( dxy, lambda, ...
+        GC = f_makeGratingCell_AIM( dxy, lambda, y_domain_size, ...
                                 period, fill_top, fill_bot, offset_ratio, OPTS  );
 end
                             
