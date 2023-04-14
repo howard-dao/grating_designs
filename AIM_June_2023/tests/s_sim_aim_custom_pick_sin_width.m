@@ -2,31 +2,36 @@
 
 clear; close all;
 
-addpath('C:\Users\howar\Siphot\Grating Couplers\grating_designs\slab_modesolver');
-addpath((genpath('C:\Users\howar\Siphot\Grating Couplers\grating_designs\AIM_June_2023')));
+% dependencies
+% laptop
+addpath('C:\Users\howar\Siphot\grating_designs\slab_modesolver');
+
+% desktop
+addpath(genpath('C:\Users\hdao\Siphot\Grating Couplers\grating_designs\slab_modesolver'));
 
 % wave parameters
-lambda0 = 1550;
-k0      = 2*pi/lambda0;
+lambda0     = 1550;              % um
+k0          = 2*pi/lambda0;
 
 % define material layers
-n_clad  = 1.445;
-n_core  = 3.477;
-n       = [ n_clad, n_core, n_clad ];
+n_clad      = 1.45;
+n_core      = 3.477;
+n           = [ n_clad, n_core, n_clad ];
 
 % discretization
 dx  = 10;
 
 % define layer thicknesses
-clad_d          = 2e3;
+thick_clad      = 2e3;
 thick_Si        = 220;
-space_Si_SiN    = 50;
-thick_bot_SiN   = 60;
-space_SiN_SiN   = 0;
-layer_t     = [ clad_d, thick_Si, clad_d ];
+space_Si_SiN    = 100;
+thick_bot_SiN   = 65;
+space_SiN_SiN   = 100;
+
+layer_t     = [ thick_clad, thick_Si, thick_clad ];
 
 % choose # of modes to solve for
-n_modes = 5;
+n_modes     = 5;
 
 % pml options
 % [ yes/no, length, strength, poly order ]
@@ -47,12 +52,6 @@ title('Fundamental Mode Field Slice');
 xlabel('y Position [nm]'); ylabel('Field');
 makeFigureNice();
 
-% now lets pick where the nitride should be
-% fields will be "si_to_bot_sin", "bot_sin_thick",
-        % "sin_to_sin_thick", "top_sin_thick"
-% sin_index           = 2.0;
-
-
 % first figure out what the bottom overlap amount is
 y = y - mean(y);
 
@@ -66,6 +65,9 @@ plot( y( y >= si_bot_sin_boty & y <= si_bot_sin_topy ), field( y >= si_bot_sin_b
 title('Field within Nitride Layer');
 xlabel('y Position [nm]'); ylabel('Field');
 makeFigureNice();
+
+% debug
+% total_bot_overlap_cumsum = 
 
 % now get cumsum starting from where the top nitride should begin
 si_top_sin_boty     = si_bot_sin_topy + space_SiN_SiN;
